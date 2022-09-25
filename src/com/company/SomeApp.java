@@ -12,18 +12,24 @@ public class SomeApp extends JFrame {
     JLabel lastScorerLabel = new JLabel("Last Scorer: N/A", JLabel.CENTER);
     Label winnerLabel = new Label("Winner: DRAW", Label.CENTER);
     int madrid = 0;
+    boolean playing = true;
     int milan = 0;
     Font fnt = new Font("Times new roman", Font.BOLD,20);
     private void updateText(char x){
-        if (milan > 10 && milan - madrid > 2){
+        if (!playing){
+            return;
+        }
+        if (milan > 10 && milan - madrid >= 2){
             winnerLabel.setText("Winner: AC Milan");
             buttonACMilan.setBackground(Color.GREEN);
             buttonRealMadrid.setBackground(Color.RED);
+            playing = false;
             return;
-        } else if (madrid > 10 && madrid - milan > 2){
+        } else if (madrid > 10 && madrid - milan >= 2){
             winnerLabel.setText("Winner: Real Madrid");
             buttonRealMadrid.setBackground(Color.GREEN);
             buttonACMilan.setBackground(Color.RED);
+            playing = false;
             return;
         }
         if (x == 'a') {
@@ -32,15 +38,6 @@ public class SomeApp extends JFrame {
             lastScorerLabel.setText("Last Scorer: Real Madrid");
         }
         resultLabel.setText("Result: " + milan + " X " + madrid);
-        if (milan > 10 && milan - madrid > 2){
-            winnerLabel.setText("Winner: AC Milan");
-            buttonACMilan.setBackground(Color.GREEN);
-            buttonRealMadrid.setBackground(Color.RED);
-        } else if (madrid > 10 && madrid - milan > 2){
-            winnerLabel.setText("Winner: Real Madrid");
-            buttonRealMadrid.setBackground(Color.GREEN);
-            buttonACMilan.setBackground(Color.RED);
-        }
     }
     public SomeApp(){
         super("What");
@@ -51,8 +48,10 @@ public class SomeApp extends JFrame {
         buttonRealMadrid.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                madrid++;
-                updateText('r');
+                if(playing) {
+                    madrid++;
+                    updateText('r');
+                }
             }
 
             @Override
