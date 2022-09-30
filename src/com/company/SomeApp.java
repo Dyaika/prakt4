@@ -10,7 +10,7 @@ public class SomeApp extends JFrame {
     JButton buttonRealMadrid = new JButton("Real Madrid");
     JLabel resultLabel = new JLabel("Result: 0 X 0", JLabel.CENTER);
     JLabel lastScorerLabel = new JLabel("Last Scorer: N/A", JLabel.CENTER);
-    Label winnerLabel = new Label("Winner: DRAW", Label.CENTER);
+    Label winnerLabel = new Label("Current winner: DRAW", Label.CENTER);
     int madrid = 0;
     boolean playing = true;
     int milan = 0;
@@ -19,18 +19,27 @@ public class SomeApp extends JFrame {
         if (!playing){
             return;
         }
-        if (milan > 10 && milan - madrid >= 2){
+        if (milan >= 10 && milan - madrid >= 2){
             winnerLabel.setText("Winner: AC Milan");
             buttonACMilan.setBackground(Color.GREEN);
             buttonRealMadrid.setBackground(Color.RED);
             playing = false;
+            resultLabel.setText("Result: " + milan + " X " + madrid);
             return;
-        } else if (madrid > 10 && madrid - milan >= 2){
+        } else if (madrid >= 10 && madrid - milan >= 2){
             winnerLabel.setText("Winner: Real Madrid");
             buttonRealMadrid.setBackground(Color.GREEN);
             buttonACMilan.setBackground(Color.RED);
             playing = false;
+            resultLabel.setText("Result: " + milan + " X " + madrid);
             return;
+        }
+        if (milan > madrid){
+            winnerLabel.setText("Current winner: AC Milan");
+        } else if (milan < madrid){
+            winnerLabel.setText("Current winner: Real Madrid");
+        } else {
+            winnerLabel.setText("Current winner: DRAW");
         }
         if (x == 'a') {
             lastScorerLabel.setText("Last Scorer: AC Milan");
